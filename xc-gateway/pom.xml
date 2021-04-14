@@ -62,10 +62,10 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
-        <!-- common -->
+        <!-- Redis -->
         <dependency>
             <groupId>com.chenyu.cloud</groupId>
-            <artifactId>xc-common</artifactId>
+            <artifactId>xc-plugins-redis</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <!-- 排除网关启动异常 ServerCodecConfigurer Not Be Found -->

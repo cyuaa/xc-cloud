@@ -1,6 +1,6 @@
 package com.chenyu.cloud.util;
 
-import com.chenyu.cloud.common.api.ResultCode;
+import com.chenyu.cloud.common.api.CommonMsg;
 import com.chenyu.cloud.common.exception.ServiceException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -56,7 +56,7 @@ public class JwtTokenUtil {
     public String getUserNameFromToken(String token) {
         log.error("JWT格式验证失败:{}", token);
         if (!token.startsWith(this.tokenHead)) {
-            throw new ServiceException(ResultCode.UNAUTHORIZED);
+            throw new ServiceException(CommonMsg.UNAUTHORIZED);
         }
         String authToken = token.substring(this.tokenHead.length());
         String username;

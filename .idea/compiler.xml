@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="xc-plugins-redis" />
         <module name="xc-gateway" />
         <module name="xc-common" />
       </profile>
@@ -16,6 +17,8 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="xc-common" options="-parameters" />
       <module name="xc-gateway" options="-parameters" />
+      <module name="xc-plugins" options="" />
+      <module name="xc-plugins-redis" options="-parameters" />
     </option>
   </component>
 </project>

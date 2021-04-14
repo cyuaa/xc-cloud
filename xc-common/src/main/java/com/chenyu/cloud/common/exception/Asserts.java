@@ -1,7 +1,7 @@
 package com.chenyu.cloud.common.exception;
 
 
-import com.chenyu.cloud.common.api.ResultCode;
+import com.chenyu.cloud.common.api.CommonMsg;
 
 /**
  * 断言处理类，用于抛出各种API异常
@@ -12,7 +12,7 @@ public class Asserts {
         throw new ServiceException(message);
     }
 
-    public static void error(ResultCode resultCode) {
+    public static void error(CommonMsg resultCode) {
         throw new ServiceException(resultCode);
     }
 }

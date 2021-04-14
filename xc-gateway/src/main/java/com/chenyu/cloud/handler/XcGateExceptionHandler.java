@@ -3,7 +3,7 @@ package com.chenyu.cloud.handler;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowException;
 import com.alibaba.fastjson.JSON;
 import com.chenyu.cloud.common.api.Result;
-import com.chenyu.cloud.common.api.ResultCode;
+import com.chenyu.cloud.common.api.CommonMsg;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ServerWebExchange;
@@ -33,9 +33,9 @@ public class XcGateExceptionHandler implements WebExceptionHandler {
 
 	private Result<?> buildErrorResult(Throwable ex) {
 		if(ex instanceof FlowException) {
-			return Result.error(ResultCode.GATEWAY_HIGH);
+			return Result.error(CommonMsg.GATEWAY_HIGH);
 		}else {
-			return Result.error(ResultCode.FAILED.getCode(), ex.getClass().getSimpleName() + ":" + ex.getMessage());
+			return Result.error(CommonMsg.FAILED.getCode(), ex.getClass().getSimpleName() + ":" + ex.getMessage());
 		}
 	}
 

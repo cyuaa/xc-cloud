@@ -1,6 +1,6 @@
 package com.chenyu.cloud.filter;
 
-import com.chenyu.cloud.common.api.ResultCode;
+import com.chenyu.cloud.common.api.CommonMsg;
 import com.chenyu.cloud.common.exception.ServiceException;
 import com.chenyu.cloud.config.IgnoreUrlsConfig;
 import com.chenyu.cloud.util.JwtTokenUtil;
@@ -61,7 +61,7 @@ public class AuthGlobalFilter implements GatewayFilter, GlobalFilter, Ordered {
         String token = request.getHeaders().getFirst(tokenHeader);
         if (StringUtils.isBlank(token)){
             log.error("token = {}",token);
-            throw new ServiceException(ResultCode.UNAUTHORIZED);
+            throw new ServiceException(CommonMsg.UNAUTHORIZED);
         }
         String username = jwtTokenUtil.getUserNameFromToken(token);
         // 待抽离
@@ -69,7 +69,7 @@ public class AuthGlobalFilter implements GatewayFilter, GlobalFilter, Ordered {
         String resultToken = stringRedisTemplate.opsForValue().get(key);
         if (StringUtils.isBlank(resultToken)) {
             log.error("resultToken = {}",resultToken);
-            throw new ServiceException(ResultCode.UNAUTHORIZED);
+            throw new ServiceException(CommonMsg.UNAUTHORIZED);
         }
         log.error("resultToken = {}",resultToken);
         return chain.filter(exchange);

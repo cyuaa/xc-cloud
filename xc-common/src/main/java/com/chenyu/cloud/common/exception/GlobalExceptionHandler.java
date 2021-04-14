@@ -15,8 +15,8 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(value = ServiceException.class)
     public Result<?> handle(ServiceException e) {
-        if (e.getResultCode() != null) {
-            return Result.error(e.getResultCode());
+        if (e.getCode() != null && e.getMessage() != null) {
+            return Result.error(e.getCode(), e.getMessage());
         }
         return Result.error(e.getMessage());
     }

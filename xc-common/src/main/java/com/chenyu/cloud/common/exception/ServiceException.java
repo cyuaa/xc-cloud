@@ -1,18 +1,30 @@
 package com.chenyu.cloud.common.exception;
 
-import com.chenyu.cloud.common.api.ResultCode;
+import com.chenyu.cloud.common.api.BaseMsg;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 自定义服务异常
  * Created by JackyChen on 2021/04/13.
  */
+@Getter
+@Setter
 public class ServiceException extends RuntimeException {
 
-    private ResultCode resultCode;
+    private Integer code;
+    private String message;
 
-    public ServiceException(ResultCode resultCode) {
-        super(resultCode.getMessage());
-        this.resultCode = resultCode;
+    public ServiceException(BaseMsg baseMsg) {
+        super(baseMsg.getMessage());
+        this.code = baseMsg.getCode();
+        this.message = baseMsg.getMessage();
+    }
+
+    public ServiceException(Integer code, String errorMessage) {
+        super(errorMessage);
+        this.code = code;
+        this.message = errorMessage;
     }
 
     public ServiceException(String message) {
@@ -25,9 +37,5 @@ public class ServiceException extends RuntimeException {
 
     public ServiceException(String message, Throwable cause) {
         super(message, cause);
-    }
-
-    public ResultCode getResultCode() {
-        return resultCode;
     }
 }
