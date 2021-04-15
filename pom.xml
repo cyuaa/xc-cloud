@@ -11,6 +11,7 @@
         <module>xc-gateway</module>
         <module>xc-common</module>
         <module>xc-plugins</module>
+        <module>xc-core</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -29,8 +30,11 @@
         <swagger2.version>3.0.0</swagger2.version>
         <swagger-models.version>2.1.7</swagger-models.version>
         <swagger-annotations.version>2.1.7</swagger-annotations.version>
+        <knife4j.version>3.0.2</knife4j.version>
         <mybatis.version>3.4.6</mybatis.version>
         <mysql-connector.version>5.1.49</mysql-connector.version>
+        <redisson.version>3.15.3</redisson.version>
+        <ehcache.version>3.9.2</ehcache.version>
         <jjwt.version>0.9.1</jjwt.version>
         <aliyun-oss.version>2.5.0</aliyun-oss.version>
         <logstash-logback.version>5.2</logstash-logback.version>
@@ -109,6 +113,12 @@
                 <artifactId>swagger-annotations</artifactId>
                 <version>${swagger-annotations.version}</version>
             </dependency>
+            <!-- Knife4j -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
             <!-- MyBatis-->
             <dependency>
                 <groupId>org.mybatis</groupId>
@@ -126,6 +136,17 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-redis</artifactId>
                 <version>${spring.boot.version}</version>
+            </dependency>
+            <!-- Redisson -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.ehcache</groupId>
+                <artifactId>ehcache</artifactId>
+                <version>${ehcache.version}</version>
             </dependency>
             <!--JWT(Json Web Token)登录支持-->
             <dependency>
@@ -208,14 +229,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
-                    <fork>true</fork>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

@@ -16,7 +16,7 @@
 package com.chenyu.cloud.redis.exception;
 
 
-import com.chenyu.cloud.common.api.BaseMsg;
+import com.chenyu.cloud.common.response.BaseMsg;
 import com.chenyu.cloud.common.exception.ServiceException;
 
 /**

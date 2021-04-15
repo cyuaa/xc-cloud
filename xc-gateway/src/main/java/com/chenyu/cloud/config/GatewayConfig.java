@@ -9,6 +9,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.chenyu.cloud.filter.AuthGlobalFilter;
 import com.chenyu.cloud.handler.XcGateExceptionHandler;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,7 @@ import java.util.Set;
  * Created by JackyChen on 2021/04/13.
  */
 @Configuration
+@EnableConfigurationProperties(IgnoreUrlsProperties.class)
 public class GatewayConfig {
 
     @Value("${spring.cloud.nacos.config.server-addr}")

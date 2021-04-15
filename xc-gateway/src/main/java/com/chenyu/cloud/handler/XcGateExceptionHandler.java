@@ -2,8 +2,8 @@ package com.chenyu.cloud.handler;
 
 import com.alibaba.csp.sentinel.slots.block.flow.FlowException;
 import com.alibaba.fastjson.JSON;
-import com.chenyu.cloud.common.api.Result;
-import com.chenyu.cloud.common.api.CommonMsg;
+import com.chenyu.cloud.common.response.Result;
+import com.chenyu.cloud.common.response.CommonMsg;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ServerWebExchange;

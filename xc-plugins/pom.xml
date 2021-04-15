@@ -13,6 +13,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>xc-plugins-redis</module>
+        <module>xc-plugins-swagger</module>
+        <module>xc-plugins-redisson</module>
+        <module>xc-plugins-ehcache</module>
     </modules>
 
     <properties>

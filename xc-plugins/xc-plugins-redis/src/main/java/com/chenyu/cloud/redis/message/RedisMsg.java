@@ -16,7 +16,7 @@
 package com.chenyu.cloud.redis.message;
 
 
-import com.chenyu.cloud.common.api.BaseMsg;
+import com.chenyu.cloud.common.response.BaseMsg;
 
 /**
  * Redis 异常消息类

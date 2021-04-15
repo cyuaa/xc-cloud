@@ -1,0 +1,52 @@
+{
+  "properties": [
+    {
+      "name": "server.servlet.api.path.global-prefix",
+      "type": "java.lang.String",
+      "defaultValue": "api",
+      "description": "专门针对 Controller层接口路径前缀全局配置."
+    },
+    {
+      "name": "spring.cache-conf.prefix",
+      "type": "java.lang.String",
+      "defaultValue": "xc-cloud",
+      "description": "缓存配置项 前缀."
+    },
+    {
+      "name": "spring.cache.enable",
+      "type": "java.lang.Boolean",
+      "defaultValue": false,
+      "description": "是否启用本地缓存 (默认不启用， 如果业务对于缓存依赖较高可启用本地缓存作为一级缓存)."
+    },
+    {
+      "name": "knife4j.basic.enable",
+      "type": "java.lang.Boolean",
+      "defaultValue": false,
+      "description": "knife4j 开启Swagger的Basic认证功能,默认是false."
+    },
+    {
+      "name": "knife4j.basic.username",
+      "type": "java.lang.String",
+      "defaultValue": "admin",
+      "description": "knife4j Basic认证用户名."
+    },
+    {
+      "name": "knife4j.basic.password",
+      "type": "java.lang.String",
+      "defaultValue": "123456",
+      "description": "knife4j Basic认证密码."
+    },
+    {
+      "name": "knife4j.production",
+      "type": "java.lang.Boolean",
+      "defaultValue": true,
+      "description": "knife4j 是否生产环境 （生产环境默认屏蔽文档）."
+    },
+    {
+      "name": "log.path",
+      "type": "java.lang.String",
+      "defaultValue": "",
+      "description": "日志存储地址."
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 package com.chenyu.cloud.common.exception;
 
-import com.chenyu.cloud.common.api.Result;
+import com.chenyu.cloud.common.response.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

@@ -1,4 +1,4 @@
-package com.chenyu.cloud.common.api;
+package com.chenyu.cloud.common.response;
 /**
  * API状态码-枚举
  * Created by JackyChen on 2021/04/13.

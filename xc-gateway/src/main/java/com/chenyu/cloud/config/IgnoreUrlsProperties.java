@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "xc.ignore")
-public class IgnoreUrlsConfig {
+public class IgnoreUrlsProperties {
 
     private List<String> urls = new ArrayList<>();
 

@@ -68,6 +68,12 @@
             <artifactId>xc-plugins-redis</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <!-- Common -->
+        <dependency>
+            <groupId>com.chenyu.cloud</groupId>
+            <artifactId>xc-common</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
         <!-- 排除网关启动异常 ServerCodecConfigurer Not Be Found -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,4 +1,4 @@
-package com.chenyu.cloud.common.api;
+package com.chenyu.cloud.common.response;
 
 import lombok.Getter;
 import lombok.Setter;

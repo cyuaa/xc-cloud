@@ -1,4 +1,4 @@
-package com.chenyu.cloud.common.api;
+package com.chenyu.cloud.common.response;
 /**
  * 统一存放消息
  * Created by JackyChen on 2021/04/14.

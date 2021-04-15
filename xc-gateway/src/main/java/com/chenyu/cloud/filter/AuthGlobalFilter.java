@@ -1,9 +1,9 @@
 package com.chenyu.cloud.filter;
 
-import com.chenyu.cloud.common.api.CommonMsg;
+import com.chenyu.cloud.common.response.CommonMsg;
 import com.chenyu.cloud.common.exception.ServiceException;
-import com.chenyu.cloud.config.IgnoreUrlsConfig;
-import com.chenyu.cloud.util.JwtTokenUtil;
+import com.chenyu.cloud.common.util.JwtTokenUtil;
+import com.chenyu.cloud.config.IgnoreUrlsProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +29,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class AuthGlobalFilter implements GatewayFilter, GlobalFilter, Ordered {
     @Autowired
-    private IgnoreUrlsConfig ignoreUrlsConfig;
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private IgnoreUrlsProperties ignoreUrlsProperties;
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
@@ -52,7 +50,7 @@ public class AuthGlobalFilter implements GatewayFilter, GlobalFilter, Ordered {
         }
         //白名单请求直接放行
         PathMatcher pathMatcher = new AntPathMatcher();
-        for (String path : ignoreUrlsConfig.getUrls()) {
+        for (String path : ignoreUrlsProperties.getUrls()) {
             if (pathMatcher.match("/**" + path, request.getPath().toString())) {
                 return chain.filter(exchange);
             }
@@ -63,7 +61,7 @@ public class AuthGlobalFilter implements GatewayFilter, GlobalFilter, Ordered {
             log.error("token = {}",token);
             throw new ServiceException(CommonMsg.UNAUTHORIZED);
         }
-        String username = jwtTokenUtil.getUserNameFromToken(token);
+        String username = JwtTokenUtil.getUserNameFromToken(token);
         // 待抽离
         String key = REDIS_DATABASE + ":" + REDIS_KEY_TOKEN + ":" + username;
         String resultToken = stringRedisTemplate.opsForValue().get(key);

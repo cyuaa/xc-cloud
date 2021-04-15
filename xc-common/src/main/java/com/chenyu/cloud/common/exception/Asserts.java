@@ -1,7 +1,7 @@
 package com.chenyu.cloud.common.exception;
 
 
-import com.chenyu.cloud.common.api.CommonMsg;
+import com.chenyu.cloud.common.response.CommonMsg;
 
 /**
  * 断言处理类，用于抛出各种API异常

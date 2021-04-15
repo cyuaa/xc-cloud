@@ -1,6 +1,6 @@
 package com.chenyu.cloud.common.exception;
 
-import com.chenyu.cloud.common.api.BaseMsg;
+import com.chenyu.cloud.common.response.BaseMsg;
 import lombok.Getter;
 import lombok.Setter;
 

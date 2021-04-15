@@ -1,4 +1,4 @@
-package com.chenyu.cloud.common.api;
+package com.chenyu.cloud.common.response;
 
 import com.github.pagehelper.PageInfo;
 import lombok.Getter;

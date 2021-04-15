@@ -2,7 +2,11 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/xc-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xc-core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/xc-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xc-plugins/xc-plugins-ehcache/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/xc-plugins/xc-plugins-redis/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xc-plugins/xc-plugins-redisson/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xc-plugins/xc-plugins-swagger/src/main/java" charset="UTF-8" />
   </component>
 </project>
