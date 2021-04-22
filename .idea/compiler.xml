@@ -12,6 +12,8 @@
         <module name="xc-common" />
         <module name="xc-core" />
         <module name="xc-plugins-redisson" />
+        <module name="xc-auth" />
+        <module name="xc-plugins-security" />
         <module name="xc-plugins-swagger" />
         <module name="xc-plugins-ehcache" />
       </profile>
@@ -19,6 +21,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="xc-auth" options="-parameters" />
       <module name="xc-common" options="-parameters" />
       <module name="xc-core" options="-parameters" />
       <module name="xc-gateway" options="-parameters" />
@@ -26,6 +29,7 @@
       <module name="xc-plugins-ehcache" options="-parameters" />
       <module name="xc-plugins-redis" options="-parameters" />
       <module name="xc-plugins-redisson" options="-parameters" />
+      <module name="xc-plugins-security" options="-parameters" />
       <module name="xc-plugins-swagger" options="-parameters" />
     </option>
   </component>

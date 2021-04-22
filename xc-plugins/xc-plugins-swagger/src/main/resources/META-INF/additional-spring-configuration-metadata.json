@@ -1,0 +1,28 @@
+{
+  "properties": [
+    {
+      "name": "knife4j.basic.enable",
+      "type": "java.lang.Boolean",
+      "defaultValue": false,
+      "description": "knife4j 开启Swagger的Basic认证功能,默认是false."
+    },
+    {
+      "name": "knife4j.basic.username",
+      "type": "java.lang.String",
+      "defaultValue": "admin",
+      "description": "knife4j Basic认证用户名."
+    },
+    {
+      "name": "knife4j.basic.password",
+      "type": "java.lang.String",
+      "defaultValue": "123456",
+      "description": "knife4j Basic认证密码."
+    },
+    {
+      "name": "knife4j.production",
+      "type": "java.lang.Boolean",
+      "defaultValue": true,
+      "description": "knife4j 是否生产环境 （生产环境默认屏蔽文档）."
+    }
+  ]
+}
