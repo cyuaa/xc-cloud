@@ -47,6 +47,114 @@
       "type": "java.lang.String",
       "defaultValue": "",
       "description": "日志存储地址."
+    },
+
+
+    {
+      "name": "xc-cloud.system-name",
+      "sourceType": "com.chenyu.cloud.common.properties.GlobalProperties",
+      "type": "java.lang.String",
+      "defaultValue": "xc-cloud 快速开发平台",
+      "description": "系统名称."
+    },
+    {
+      "name": "xc-cloud.system-starter-time",
+      "sourceType": "com.chenyu.cloud.common.properties.GlobalProperties",
+      "type": "java.lang.String",
+      "description": "系统启动时间 为空则默认 真实当前系统启动时间."
+    },
+
+
+
+
+    {
+      "name": "xc-cloud.web.upload-path",
+      "sourceType": "com.chenyu.cloud.common.properties.GlobalProperties$Web",
+      "type": "java.lang.String",
+      "defaultValue": "",
+      "description": "Web 上传地址."
+    },
+
+
+    {
+      "name": "xc-cloud.auth.default-pass",
+      "sourceType": "com.chenyu.cloud.common.properties.GlobalProperties$Auth",
+      "type": "java.lang.String",
+      "defaultValue": "123456",
+      "description": "认证类 默认密码 (密码至少包含大小写字母，数字，且不少于6位)."
+    },
+
+    {
+      "name": "xc-cloud.auth.token.secret",
+      "sourceType": "com.chenyu.cloud.common.properties.GlobalProperties$Auth$Token",
+      "type": "java.lang.String",
+      "defaultValue": "xc-cloud",
+      "description": "认证类 Token 盐值."
+    },
+    {
+      "name": "xc-cloud.auth.token.effective-time",
+      "sourceType": "com.chenyu.cloud.common.properties.GlobalProperties$Auth$Token",
+      "type": "java.lang.Integer",
+      "defaultValue": 120,
+      "description": "认证类 Token 有效时间."
+    },
+    {
+      "name": "xc-cloud.auth.token.tokenHeader",
+      "sourceType": "com.chenyu.cloud.common.properties.GlobalProperties$Auth$Token",
+      "type": "java.util.Set<java.lang.String>",
+      "defaultValue": "Authorization",
+      "description": "Authorization."
+    },
+    {
+      "name": "xc-cloud.auth.token.tokenHead",
+      "sourceType": "com.chenyu.cloud.common.properties.GlobalProperties$Auth$Token",
+      "type": "java.lang.Integer",
+      "defaultValue": "Bearer",
+      "description": "Bearer."
+    },
+
+    {
+      "name": "xc-cloud.auth.login.limit-count",
+      "sourceType": "com.chenyu.cloud.common.properties.GlobalProperties$Auth$Login",
+      "type": "java.lang.Integer",
+      "defaultValue": -1,
+      "description": "限制登录数量 -1 为无限大."
+    },
+    {
+      "name": "xc-cloud.auth.login.limit-refuse",
+      "sourceType": "com.chenyu.cloud.common.properties.GlobalProperties$Auth$Login",
+      "description": "限制登录拒绝策略 after为后者 before为前者."
+    },
+    {
+      "name": "xc-cloud.auth.login.slip-count",
+      "sourceType": "com.chenyu.cloud.common.properties.GlobalProperties$Auth$Login",
+      "type": "java.lang.Integer",
+      "defaultValue": 5,
+      "description": "认证类 登录 失败次数."
+    },
+    {
+      "name": "xc-cloud.auth.login.slip-verify-count",
+      "sourceType": "com.chenyu.cloud.common.properties.GlobalProperties$Auth$Login",
+      "type": "java.lang.Integer",
+      "defaultValue": 3,
+      "description": "认证类 登录 失败N次后弹出验证码 （超过验证码阈值 弹出验证码）."
+    },
+    {
+      "name": "xc-cloud.auth.login.slip-lock-speed",
+      "sourceType": "com.chenyu.cloud.common.properties.GlobalProperties$Auth$Login",
+      "type": "java.lang.Integer",
+      "defaultValue": 300,
+      "description": "认证类 登录 失败锁定时间(秒)."
+    },
+
+
+    {
+      "name": "xc-cloud.excel.export-max-count",
+      "sourceType": "com.chenyu.cloud.common.properties.GlobalProperties$Excel",
+      "type": "java.lang.Integer",
+      "defaultValue": 20000,
+      "description": "Excel 导出最大操作数."
     }
+    
   ]
 }

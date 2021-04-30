@@ -21,10 +21,17 @@
     </properties>
 
     <dependencies>
+
         <!-- gateway -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- loadbalancer -->
         <dependency>
@@ -36,10 +43,10 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
         </dependency>
-        <!-- sentinel -->
+        <!-- sentilen 控制台 -->
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-transport-simple-http</artifactId>
         </dependency>
         <!-- sentilen用 nacos 做 持久化-->
         <dependency>
@@ -62,6 +69,11 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
+        <!-- Feign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
         <!-- Redis -->
         <dependency>
             <groupId>com.chenyu.cloud</groupId>
@@ -73,45 +85,45 @@
             <groupId>com.chenyu.cloud</groupId>
             <artifactId>xc-common</artifactId>
             <version>${project.parent.version}</version>
-        </dependency>
-        <!-- 排除网关启动异常 ServerCodecConfigurer Not Be Found -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-webmvc</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- Security -->
+        <dependency>
+            <groupId>com.chenyu.cloud</groupId>
+            <artifactId>xc-plugins-security</artifactId>
+            <version>${project.parent.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.chenyu.cloud</groupId>
+                    <artifactId>xc-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- Mysql -->
+        <dependency>
+            <groupId>com.chenyu.cloud</groupId>
+            <artifactId>xc-plugins-datasource</artifactId>
+            <version>${project.parent.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.chenyu.cloud</groupId>
+                    <artifactId>xc-plugins-security</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-
-                <configuration>
-                    <!-- <skip>true</skip> -->
-                    <includeSystemScope>true</includeSystemScope>
-                </configuration>
-            </plugin>
-
-            <!-- 打包时不打配置文件，使用nacos配置单 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <excludes>
-                        <exclude>application*.*</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-
-        </plugins>
-    </build>
 
 </project>

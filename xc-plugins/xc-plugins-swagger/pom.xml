@@ -28,10 +28,9 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
         </dependency>
-        <!-- Common -->
         <dependency>
             <groupId>com.chenyu.cloud</groupId>
-            <artifactId>xc-common</artifactId>
+            <artifactId>xc-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
     </dependencies>

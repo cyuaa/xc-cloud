@@ -16,6 +16,8 @@
         <module>xc-plugins-swagger</module>
         <module>xc-plugins-redisson</module>
         <module>xc-plugins-ehcache</module>
+        <module>xc-plugins-security</module>
+        <module>xc-plugins-datasource</module>
     </modules>
 
     <properties>

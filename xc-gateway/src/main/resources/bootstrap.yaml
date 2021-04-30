@@ -26,12 +26,6 @@ spring:
           # 是否与服务发现组件进行结合，通过 serviceId 转发到具体的服务实例。默认为false
           enabled: true
           lower-case-service-id: true #使用小写service-id
-      # 处理响应头重复
-    sentinel:
-      transport:
-        dashboard: ${NACOS_ADDR:127.0.0.1}:${SENTINEL_PORT:18080}
-      log:
-        dir: ./logs/sentinel/
       globalcors:
         corsConfigurations:
           '[/**]':
@@ -42,5 +36,6 @@ spring:
             allowedMethods: "*"
             allowedHeaders: "*"
             allow-credentials: true
+
   main:
     allow-bean-definition-overriding: true

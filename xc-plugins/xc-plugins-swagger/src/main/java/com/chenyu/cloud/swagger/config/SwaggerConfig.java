@@ -1,7 +1,7 @@
 package com.chenyu.cloud.swagger.config;
 
 import com.chenyu.cloud.common.constants.CoreConstants;
-import com.chenyu.cloud.common.constants.TokenConstants;
+import com.chenyu.cloud.common.properties.GlobalProperties;
 import com.fasterxml.classmate.TypeResolver;
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import com.google.common.collect.Lists;
@@ -12,7 +12,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
-import springfox.documentation.builders.*;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
@@ -34,6 +37,9 @@ import java.util.List;
 public class SwaggerConfig {
 
     private final TypeResolver typeResolver;
+
+    @Autowired
+    private GlobalProperties globalProperties;
 
     @Autowired
     public SwaggerConfig(TypeResolver typeResolver) {
@@ -104,7 +110,7 @@ public class SwaggerConfig {
     private List<Parameter> defaultToken() {
         ParameterBuilder parameterBuilder = new ParameterBuilder();
         List<Parameter> parameters= Lists.newArrayList();
-        parameterBuilder.name(TokenConstants.TOKEN_NAME)
+        parameterBuilder.name(globalProperties.getAuth().getToken().getTokenHeader())
                 .description("Token 令牌")
                 .modelRef(new ModelRef("String"))
                 .parameterType("header")
@@ -121,11 +127,11 @@ public class SwaggerConfig {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return Lists.newArrayList(new SecurityReference(TokenConstants.TOKEN_NAME, authorizationScopes));
+        return Lists.newArrayList(new SecurityReference(globalProperties.getAuth().getToken().getTokenHeader(), authorizationScopes));
     }
 
     private ApiKey apiKey() {
-        return new ApiKey(TokenConstants.TOKEN_NAME, TokenConstants.TOKEN_NAME, "header");
+        return new ApiKey(globalProperties.getAuth().getToken().getTokenHeader(), globalProperties.getAuth().getToken().getTokenHeader(), "header");
     }
 
 

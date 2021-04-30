@@ -15,9 +15,9 @@
  */
 package com.chenyu.cloud.redisson.config;
 
+import com.chenyu.cloud.redisson.properties.RedissonProperties;
 import com.chenyu.cloud.redisson.RedissonLock;
 import com.chenyu.cloud.redisson.RedissonManager;
-import com.chenyu.cloud.redisson.properties.RedissonProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

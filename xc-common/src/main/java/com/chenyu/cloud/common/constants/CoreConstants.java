@@ -30,4 +30,7 @@ public interface CoreConstants {
     /** 专门针对 Controller层接口路径前缀 */
     String API_PROP_PREFIX= "server.servlet.api.path";
 
+    /** 忽略认证的url */
+    String URL_IGNORE = "xc.ignored";
+
 }

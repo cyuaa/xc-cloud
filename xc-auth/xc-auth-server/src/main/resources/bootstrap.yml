@@ -1,0 +1,18 @@
+server:
+  port: 1120
+spring:
+  profiles:
+    # dev 默认为开发环境 , prod 线上环境
+    active: dev
+  application:
+    name: xc-auth
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_ADDR:127.0.0.1}:${NACOS_PORT:8848}
+      config:
+        server-addr: ${NACOS_ADDR:127.0.0.1}:${NACOS_PORT:8848}
+        prefix: ${spring.application.name}
+        file-extension: yaml
+  main:
+    allow-bean-definition-overriding: true
