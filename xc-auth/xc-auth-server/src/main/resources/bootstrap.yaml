@@ -14,5 +14,8 @@ spring:
         server-addr: ${NACOS_ADDR:127.0.0.1}:${NACOS_PORT:8848}
         prefix: ${spring.application.name}
         file-extension: yaml
+        shared-configs:
+          - dataId: application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+            refresh: true
   main:
     allow-bean-definition-overriding: true

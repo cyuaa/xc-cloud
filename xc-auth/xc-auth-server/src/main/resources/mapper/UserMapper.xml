@@ -20,17 +20,17 @@
   <select id="findAll" resultType="com.chenyu.cloud.auth.model.UserModel">
     select
     <include refid="Base_Column_List" />
-    from ums_admin
-    ORDER BY create_time DESC
+    from sys_user
+    ORDER BY createTime DESC
   </select>
   <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ums_admin
+    from sys_user
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteById" parameterType="java.lang.Long">
-    delete from ums_admin
+    delete from sys_user
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.chenyu.cloud.auth.model.UserModel">
@@ -49,6 +49,9 @@
 
   <select id="countByUsername" resultType="int">
     SELECT count(1) FROM sys_user WHERE username = #{username}
+  </select>
+  <select id="findByUsername" resultType="com.chenyu.cloud.auth.model.UserModel">
+    SELECT * FROM sys_user WHERE username = #{username}
   </select>
 
 

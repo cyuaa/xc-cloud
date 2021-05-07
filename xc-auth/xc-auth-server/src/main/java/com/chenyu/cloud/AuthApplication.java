@@ -11,7 +11,7 @@ import org.springframework.cloud.client.SpringCloudApplication;
  * Created by JackyChen on 2021/04/29.
  */
 @EnableConfigurationProperties(GlobalProperties.class)
-@MapperScan
+@MapperScan("com.chenyu.cloud.auth.mapper")
 @SpringCloudApplication
 public class AuthApplication {
     public static void main(String[] args) {

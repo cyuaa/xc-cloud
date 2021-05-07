@@ -119,7 +119,7 @@ public class UserRest implements UserApi {
 
     @Override
     public UserModel findByUsername(String username) {
-        return null;
+        return userService.findByUsername(username);
     }
 
     @Override

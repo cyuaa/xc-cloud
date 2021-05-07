@@ -3,10 +3,14 @@ package com.chenyu.cloud.auth.model;
 import com.chenyu.cloud.common.model.BaseModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @ApiModel("角色信息")
 @Data
+@EqualsAndHashCode(callSuper = false)
+@AllArgsConstructor
 public class RoleModel extends BaseModel {
     private static final long serialVersionUID = 1L;
 

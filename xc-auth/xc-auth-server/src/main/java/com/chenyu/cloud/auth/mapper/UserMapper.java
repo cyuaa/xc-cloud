@@ -21,6 +21,8 @@ public interface UserMapper {
 
     UserModel findById(Integer id);
 
+    UserModel findByUsername(String userName);
+
 //    int updateByExampleSelective(@Param("record") UserModel record, @Param("example") UmsAdminExample example);
 
 //    int updateByExample(@Param("record") UserModel record, @Param("example") UmsAdminExample example);
