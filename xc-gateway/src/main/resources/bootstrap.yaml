@@ -14,9 +14,12 @@ spring:
         server-addr: ${NACOS_ADDR:127.0.0.1}:${NACOS_PORT:8848}
         prefix: ${spring.application.name}
         file-extension: yaml
-        extension-configs:
-          dataId: sentinel-service
-          group: DEFAULT_GROUP
+        shared-configs:
+          - dataId: application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+            refresh: true
+          - data-id: gateway-route.json #这里必须要带有文件后缀
+            group: DEFAULT_GROUP
+            refresh: true
     loadbalancer:
       ribbon:
         enabled: false # 关闭ribbon

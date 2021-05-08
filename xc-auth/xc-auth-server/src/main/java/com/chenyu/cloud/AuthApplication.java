@@ -3,8 +3,9 @@ package com.chenyu.cloud;
 import com.chenyu.cloud.common.properties.GlobalProperties;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * 认证启动类
@@ -12,7 +13,8 @@ import org.springframework.cloud.client.SpringCloudApplication;
  */
 @EnableConfigurationProperties(GlobalProperties.class)
 @MapperScan("com.chenyu.cloud.auth.mapper")
-@SpringCloudApplication
+@EnableDiscoveryClient
+@SpringBootApplication
 public class AuthApplication {
     public static void main(String[] args) {
         SpringApplication.run(AuthApplication.class, args);

@@ -1,11 +1,12 @@
 package com.chenyu.cloud.security.config;
 
+import cn.hutool.core.util.ArrayUtil;
 import com.chenyu.cloud.auth.model.RoleModel;
-import com.chenyu.cloud.auth.rest.UserApi;
 import com.chenyu.cloud.security.component.*;
 import com.chenyu.cloud.security.properties.IgnoreUrlsConfig;
 import com.chenyu.cloud.security.util.JwtUtil;
 import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
@@ -16,14 +17,17 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.server.SecurityWebFilterChain;
 
 import java.util.List;
 import java.util.Map;
@@ -34,8 +38,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * 对SpringSecurity的配置的扩展，支持自定义白名单资源路径和查询用户逻辑
  * Created by JackyChen on 2021/4/28.
  */
+@Slf4j
 @Configuration
-@EnableWebSecurity
+@EnableWebFluxSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -44,9 +49,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private XcUserDetailsService xcUserDetailsService;
-
-    @Autowired
-    private UserApi userApi;
 
     @Autowired
     private IgnoreUrlsConfig ignoreUrlsConfig;
@@ -71,8 +73,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         };
     }
 
+    @Bean
+    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity httpSecurity) {
+        httpSecurity.cors().and().csrf().disable()
+                .authorizeExchange()
+                //不需要保护的资源路径允许访问
+                .pathMatchers(ArrayUtil.toArray(ignoreUrlsConfig.getUrls(), String.class)).permitAll();
+        return httpSecurity.build();
+    }
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+        log.info("<===== Init Security Config =====>");
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity
                 .authorizeRequests();
         //不需要保护的资源路径允许访问
@@ -100,6 +112,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(restAuthenticationEntryPoint())
                 // 自定义权限拦截器JWT过滤器
                 .and()
+                .userDetailsService(xcUserDetailsService)
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         //有动态权限配置时添加动态权限校验过滤器
         if(dynamicSecurityService!=null){
@@ -130,7 +143,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public RestfulAccessDeniedHandler restfulAccessDeniedHandler() {
+    public AccessDeniedHandler restfulAccessDeniedHandler() {
         return new RestfulAccessDeniedHandler();
     }
 

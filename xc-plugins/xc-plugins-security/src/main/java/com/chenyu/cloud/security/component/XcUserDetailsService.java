@@ -1,9 +1,10 @@
 package com.chenyu.cloud.security.component;
 
+import com.chenyu.cloud.auth.api.UserApi;
 import com.chenyu.cloud.auth.model.RoleModel;
 import com.chenyu.cloud.auth.model.UserModel;
-import com.chenyu.cloud.auth.rest.UserApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class XcUserDetailsService implements UserDetailsService {
 
     @Autowired
+    @Lazy
     private UserApi userApi;
 
     @Override

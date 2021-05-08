@@ -35,7 +35,7 @@ public class DynamicAccessDecisionManager implements AccessDecisionManager {
                 }
             }
         }
-        throw new AccessDeniedException("抱歉，您没有访问权限");
+        throw new AccessDeniedException("抱歉，您没有访问权限!");
     }
 
     @Override

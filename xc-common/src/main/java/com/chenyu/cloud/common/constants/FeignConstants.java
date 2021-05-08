@@ -8,4 +8,9 @@ public interface FeignConstants {
 
     String XC_CLOUD_AUTH = "xc-auth";
 
+    String AUTH_USER = "user";
+    String AUTH_USER_API = "userApi";
+    String AUTH_TENANT = "tenant";
+    String AUTH_TENANT_API = "tenantApi";
+
 }

@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.chenyu.cloud.auth.rest;
+package com.chenyu.cloud.auth.api;
 
 import com.chenyu.cloud.auth.model.TenantModel;
 import com.chenyu.cloud.common.constants.FeignConstants;
@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+import static com.chenyu.cloud.common.constants.FeignConstants.AUTH_TENANT;
+import static com.chenyu.cloud.common.constants.FeignConstants.AUTH_TENANT_API;
+
 
 /**
  *
@@ -33,7 +36,7 @@ import java.util.List;
  *
  *
  */
-@FeignClient(FeignConstants.XC_CLOUD_AUTH)
+@FeignClient(name = FeignConstants.XC_CLOUD_AUTH, path = AUTH_TENANT, contextId = AUTH_TENANT_API)
 public interface TenantApi {
 
     /** 标题 */

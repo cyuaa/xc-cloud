@@ -8,7 +8,6 @@ import com.chenyu.cloud.security.util.UserTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Configuration;
@@ -26,17 +25,31 @@ import reactor.core.publisher.Mono;
  */
 @Configuration
 @Slf4j
-public class AuthGlobalFilter implements GatewayFilter, GlobalFilter, Ordered {
+public class AuthGlobalFilter implements GlobalFilter, Ordered {
     @Autowired
     private IgnoreUrlsProperties ignoreUrlsProperties;
 
     @Autowired
     private GlobalProperties globalProperties;
 
+    private AntPathMatcher antPathMatcher = new AntPathMatcher();
+
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        // 获取路由url
+        /*URI uri = exchange.getAttribute(GATEWAY_REQUEST_URL_ATTR);
+        String schemePrefix = exchange.getAttribute(GATEWAY_SCHEME_PREFIX_ATTR);
+        // 仅支持以lb开头的url
+        if (uri == null || (!"lb".equals(uri.getScheme())) && (!"lb".equals(schemePrefix))) {
+            return chain.filter(exchange);
+        }*/
         ServerHttpRequest request = exchange.getRequest();
+        String pathStr = request.getURI().getPath();
+        // 内部服务接口，不允许外部访问
+        if(antPathMatcher.match("/**/inner/**", pathStr)) {
+            throw new ServiceException(CommonMsg.FORBIDDEN);
+        }
         //防止 OPTIONS 请求直接放行
         if (request.getMethod().equals(HttpMethod.OPTIONS)) {
             return chain.filter(exchange);
@@ -70,6 +83,6 @@ public class AuthGlobalFilter implements GatewayFilter, GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return Ordered.HIGHEST_PRECEDENCE;
+        return 0;
     }
 }

@@ -16,7 +16,7 @@
 package com.chenyu.cloud.security.util;
 
 import com.chenyu.cloud.auth.model.TenantModel;
-import com.chenyu.cloud.auth.rest.TenantApi;
+import com.chenyu.cloud.auth.api.TenantApi;
 import com.chenyu.cloud.common.enums.DictType;
 import com.chenyu.cloud.common.response.CommonMsg;
 import com.chenyu.cloud.common.response.CoreMsg;
@@ -153,6 +153,7 @@ public class TenantUtil {
     // =====================================
 
     @Autowired
+    @Lazy
     public void setTenantApi(TenantApi tenantApi) {
         TenantUtil.tenantApi = tenantApi;
     }

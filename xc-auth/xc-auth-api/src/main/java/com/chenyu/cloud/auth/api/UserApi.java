@@ -1,4 +1,4 @@
-package com.chenyu.cloud.auth.rest;
+package com.chenyu.cloud.auth.api;
 
 import com.chenyu.cloud.auth.dto.UserDto;
 import com.chenyu.cloud.auth.dto.UserPasswordDto;
@@ -11,11 +11,14 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
 
+import static com.chenyu.cloud.common.constants.FeignConstants.AUTH_USER;
+import static com.chenyu.cloud.common.constants.FeignConstants.AUTH_USER_API;
+
 /**
  * 用户feign-api
  * Created by JackyChen on 2021/04/29.
  */
-@FeignClient(FeignConstants.XC_CLOUD_AUTH)
+@FeignClient(name = FeignConstants.XC_CLOUD_AUTH, path = AUTH_USER, contextId = AUTH_USER_API)
 public interface UserApi {
 
     /** 标题 */
@@ -27,35 +30,35 @@ public interface UserApi {
      * 当前登陆用户信息
      * @return Result
      */
-    @GetMapping("/user/info")
+    @GetMapping("/info")
     Result<UserInfo> getInfo();
 
     /**
      * 通过用户id查询用户信息
      * @return Result
      */
-    @GetMapping("/user/info/{id}")
+    @GetMapping("/info/{id}")
     Result<UserInfo> findById(@PathVariable(name = "id") Integer userId);
 
     /**
      * 通过用户id查询用户信息(包含密码)--内部调用
      * @return Result
      */
-    @GetMapping("/user/inter/{id}")
+    @GetMapping("/inter/{id}")
     UserModel findByIdInter(@PathVariable(name = "id") Integer userId);
 
     /**
      * 当前登陆用户信息
      * @return Result
      */
-    @GetMapping("/user/org")
+    @GetMapping("/org")
     Result<UserOrgRefModel> getOrg();
 
     /**
      * 当前登陆用户信息
      * @return Result
      */
-    @GetMapping("/user/{id}")
+    @GetMapping("/{id}/org")
     Result<UserOrgRefModel> getOrgByUserId(@PathVariable(name = "id") Integer userId);
 
     /**
@@ -63,7 +66,7 @@ public interface UserApi {
      * @param userId 用户Id
      * @return Result
      */
-    @GetMapping("/user/role/ids/{userId}")
+    @GetMapping("/role/ids/{userId}")
     Result<List<Integer>> getRoleIdsByUserId(@PathVariable("userId") Integer userId);
 
 
@@ -71,14 +74,14 @@ public interface UserApi {
      * 修改密码
      * @return Result
      */
-    @PutMapping("/user/password")
+    @PutMapping("/password")
     Result<?> updatePassword(@RequestBody UserPasswordDto userPassword);
 
     /**
      * 重置密码 ID
      * @return Result
      */
-    @PutMapping("/user/reset/password/{id}")
+    @PutMapping("/reset/password/{id}")
     Result<?> resetPasswordById(@PathVariable("id") Integer userId);
 
     /**
@@ -88,7 +91,7 @@ public interface UserApi {
      * @param enable 启用状态 (0->禁用；1->启用)
      * @return Result
      */
-    @PutMapping("/user/status")
+    @PutMapping("/status")
     Result<?> updateStatus(@RequestParam("userId") Integer userId, @RequestParam("enable") Integer enable);
 
     /**
@@ -96,7 +99,7 @@ public interface UserApi {
      * @param request 文件流 request
      * @return Result
      */
-    @PutMapping("/user/icon/{id}")
+    @PutMapping("/icon/{id}")
     Result<?> updateIcon(MultipartHttpServletRequest request, @PathVariable("id") Integer userId);
 
     /**
@@ -106,7 +109,7 @@ public interface UserApi {
      * @param request request
      * @return Result
      */
-    @GetMapping("/user")
+    @GetMapping
     Result<?> page(
             @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
             @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
@@ -118,7 +121,7 @@ public interface UserApi {
      * @param userDto 模型
      * @return Result
      */
-    @PostMapping("/user/register")
+    @PostMapping("/register")
     Result<?> register(@RequestBody UserDto userDto);
 
     /**
@@ -126,7 +129,7 @@ public interface UserApi {
      * @param model 模型
      * @return Result
      */
-    @PutMapping("/user")
+    @PutMapping
     Result<?> update(@RequestBody UserModel model);
 
 
@@ -135,7 +138,7 @@ public interface UserApi {
      * @param id ID
      * @return Result
      */
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/{id}")
     Result<?> del(@PathVariable("id") Integer id);
 
     /**
@@ -143,7 +146,7 @@ public interface UserApi {
      * @param ids ID 数组
      * @return Result
      */
-    @PostMapping("/user/batch")
+    @PostMapping("/batch")
     Result<?> delAll(@RequestBody List<Integer> ids);
 
     /**
@@ -151,7 +154,7 @@ public interface UserApi {
      * @param username 用户名
      * @return Result
      */
-    @GetMapping("/user/name/{username}")
+    @GetMapping("/name/{username}")
     UserModel findByUsername(@PathVariable("username") String username);
 
     /**
@@ -159,7 +162,7 @@ public interface UserApi {
      * @param userId 用户Id
      * @return Result
      */
-    @GetMapping("/user/roles/{userId}")
+    @GetMapping("/roles/{userId}")
     List<RoleModel> getRoleModelsByUserId(Integer userId);
 
     /**
@@ -167,7 +170,7 @@ public interface UserApi {
      * @param userId 用户Id
      * @return Result
      */
-    @GetMapping("/user/perms/{userId}")
+    @GetMapping("/perms/{userId}")
     List<String> getAllPerms(@PathVariable("userId") Integer userId);
 
     /**
@@ -175,7 +178,7 @@ public interface UserApi {
      * @param userId 用户Id
      * @return Result
      */
-    @GetMapping("/user/menus/{userId}")
+    @GetMapping("/menus/{userId}")
     List<MenuModel> getMenuListByUserId(@PathVariable("userId") Integer userId);
 
 
@@ -183,7 +186,7 @@ public interface UserApi {
      * 当前登陆用户信息
      * @return Result
      */
-    @GetMapping("/user/org/{userId}")
+    @GetMapping("/org/{userId}")
     Result<UserOrgRefModel> getOrgInfoByUserId(@PathVariable("userId") Integer userId);
 
 }

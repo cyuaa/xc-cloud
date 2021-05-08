@@ -19,7 +19,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
 import com.chenyu.cloud.auth.model.MenuModel;
 import com.chenyu.cloud.auth.model.UserModel;
-import com.chenyu.cloud.auth.rest.UserApi;
+import com.chenyu.cloud.auth.api.UserApi;
 import com.chenyu.cloud.common.exception.TokenException;
 import com.chenyu.cloud.common.response.CommonMsg;
 import com.chenyu.cloud.common.response.CoreMsg;
