@@ -34,16 +34,16 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.chenyu.cloud.auth.model.UserModel">
-    <selectKey keyProperty="id">
+    <selectKey keyProperty="id" resultType="int">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into sys_user (username, password, icon, mobile, realName,
-      email, nickName, note, loginIp, loginTime, sign
-      createTime, updateTime, createdBy, updateBy, tenantId, version, status
+      email, nickName, note, loginIp, loginTime, sign,
+      createTime, updateTime, createBy, updateBy, tenantId, version, status
       )
-    values (#{model.username}, #{model.password}, #{model.icon}, #{model.mobile}, #{model.realName},
-    #{model.email}, #{model.nickName}, #{model.note}, #{model.loginIp}, #{model.loginTime}, #{model.sign}
-    #{model.createTime}, #{model.updateTime}, #{model.createdBy}, #{model.updateBy}, #{model.tenantId}, #{model.version}, #{model.status}
+    values (#{username}, #{password}, #{icon}, #{mobile}, #{realName},
+    #{email}, #{nickName}, #{note}, #{loginIp}, #{loginTime}, #{sign},
+    #{createTime}, #{updateTime}, #{createBy}, #{updateBy}, #{tenantId}, #{version}, #{status}
     )
   </insert>
 

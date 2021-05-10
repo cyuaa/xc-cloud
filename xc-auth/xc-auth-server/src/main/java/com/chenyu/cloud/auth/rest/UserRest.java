@@ -87,8 +87,8 @@ public class UserRest {
 
     @ApiOperation("用户注册")
     @PostMapping("/register")
-    public Result<?> register(UserDto userDto) {
-        return Result.success(userService.register(userDto));
+    public Result<?> register(UserDto userDto, HttpServletRequest request) {
+        return Result.success(userService.register(userDto, request));
     }
 
     public Result<?> update(UserModel model) {
@@ -103,6 +103,8 @@ public class UserRest {
         return null;
     }
 
+    @ApiOperation("通过用户名查询用户")
+    @GetMapping("/name/{username}")
     public UserModel findByUsername(String username) {
         return userService.findByUsername(username);
     }

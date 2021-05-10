@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.chenyu.cloud.core.utils;
+package com.chenyu.cloud.core.util;
 
 import com.chenyu.cloud.common.constants.OrderConstants;
 import com.chenyu.cloud.redisson.RedissonLock;

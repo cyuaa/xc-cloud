@@ -1,6 +1,5 @@
 package com.chenyu.cloud.security.config;
 
-import cn.hutool.core.util.ArrayUtil;
 import com.chenyu.cloud.auth.model.RoleModel;
 import com.chenyu.cloud.security.component.*;
 import com.chenyu.cloud.security.properties.IgnoreUrlsConfig;
@@ -17,17 +16,15 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
-import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.server.SecurityWebFilterChain;
 
 import java.util.List;
 import java.util.Map;
@@ -40,7 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Slf4j
 @Configuration
-@EnableWebFluxSecurity
+@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -71,15 +68,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             }
             return map;
         };
-    }
-
-    @Bean
-    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity httpSecurity) {
-        httpSecurity.cors().and().csrf().disable()
-                .authorizeExchange()
-                //不需要保护的资源路径允许访问
-                .pathMatchers(ArrayUtil.toArray(ignoreUrlsConfig.getUrls(), String.class)).permitAll();
-        return httpSecurity.build();
     }
 
     @Override

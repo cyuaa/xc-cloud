@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.chenyu.cloud.core.utils;
+package com.chenyu.cloud.gateway.util;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
@@ -22,10 +22,10 @@ import cn.hutool.core.util.XmlUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.chenyu.cloud.common.constants.CacheConstants;
 import com.chenyu.cloud.common.constants.CoreConstants;
-import com.chenyu.cloud.common.enums.CacheType;
-import com.chenyu.cloud.core.properties.CacheProperties;
-import com.chenyu.cloud.ehcache.EhCachePlugin;
 import com.chenyu.cloud.common.constants.OrderConstants;
+import com.chenyu.cloud.common.enums.CacheType;
+import com.chenyu.cloud.ehcache.EhCachePlugin;
+import com.chenyu.cloud.gateway.properties.CacheProperties;
 import com.chenyu.cloud.redis.RedisPlugin;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

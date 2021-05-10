@@ -80,6 +80,12 @@
             <artifactId>xc-plugins-redis</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <!-- Ehcache -->
+        <dependency>
+            <groupId>com.chenyu.cloud</groupId>
+            <artifactId>xc-plugins-ehcache</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
         <!-- Common -->
         <dependency>
             <groupId>com.chenyu.cloud</groupId>
@@ -89,22 +95,6 @@
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-web</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- Security -->
-        <dependency>
-            <groupId>com.chenyu.cloud</groupId>
-            <artifactId>xc-plugins-security</artifactId>
-            <version>${project.parent.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-web</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.chenyu.cloud</groupId>
-                    <artifactId>xc-core</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -123,6 +113,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
         </dependency>
     </dependencies>
 

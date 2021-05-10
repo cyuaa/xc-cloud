@@ -35,7 +35,7 @@ public interface UserService {
     /**
      * 注册功能
      */
-    UserModel register(UserDto userDto);
+    UserModel register(UserDto userDto, HttpServletRequest request);
 
     /**
      * 登录功能

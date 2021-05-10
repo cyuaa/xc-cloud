@@ -20,7 +20,7 @@ public class UserModel extends BaseModel {
     private String password; // 密码
     @ApiModelProperty(value = "头像")
     private String icon; // 头像
-    @ApiModelProperty(value = "手机")
+    @ApiModelProperty(value = "手机号")
     private String mobile;
     @ApiModelProperty(value = "真实姓名")
     private String realName;

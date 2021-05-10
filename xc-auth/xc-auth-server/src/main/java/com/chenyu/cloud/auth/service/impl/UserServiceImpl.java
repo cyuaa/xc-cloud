@@ -10,14 +10,14 @@ import com.chenyu.cloud.auth.service.UserService;
 import com.chenyu.cloud.common.enums.DictType;
 import com.chenyu.cloud.common.exception.ServiceException;
 import com.chenyu.cloud.common.exception.TokenException;
+import com.chenyu.cloud.common.properties.GlobalProperties;
 import com.chenyu.cloud.common.response.CommonMsg;
 import com.chenyu.cloud.common.response.Result;
 import com.chenyu.cloud.common.response.TokenMsg;
 import com.chenyu.cloud.common.thread.refuse.AsyncProcessQueueReFuse;
 import com.chenyu.cloud.common.util.IPUtil;
-import com.chenyu.cloud.common.properties.GlobalProperties;
-import com.chenyu.cloud.core.utils.CaptchaUtil;
-import com.chenyu.cloud.core.utils.ValidationUtil;
+import com.chenyu.cloud.core.util.CaptchaUtil;
+import com.chenyu.cloud.core.util.ValidationUtil;
 import com.chenyu.cloud.security.component.XcUserDetailsService;
 import com.chenyu.cloud.security.util.TenantUtil;
 import com.chenyu.cloud.security.util.UserTokenUtil;
@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UserModel register(UserDto userDto) {
+    public UserModel register(UserDto userDto, HttpServletRequest request) {
         Assert.notNull(userDto, "User Data Must Not Be Null!");
 
         String username = userDto.getUsername();
@@ -106,7 +106,13 @@ public class UserServiceImpl implements UserService {
         // 默认用户状态为启用
         model.setStatus(DictType.NO_YES_YES.getValue());
         // 设置tenantId
-        model.setTenantId(UserUtil.getTenantId());
+        Integer tenantId = null;
+        try {
+            tenantId = UserUtil.getTenantId();
+        } catch (Exception e) {
+            tenantId = 1;
+        }
+        model.setTenantId(tenantId);
 
         // 新增可以直接设置密码
         if(StringUtils.isNotEmpty(model.getPassword())){
@@ -171,7 +177,7 @@ public class UserServiceImpl implements UserService {
         UserModel user = UserUtil.getUserByUserName(form.getUsername());
 
         // 账号不存在、密码错误
-        if(user == null ||
+        if(user == null || StringUtils.isBlank(user.getPassword()) ||
                 !user.getPassword().equals(UserUtil.handlePassword(form.getPassword(), globalProperties.getAuth().getToken().getSecret()))) {
             // 判断是否需要锁定账号 这里没有直接抛异常 而是返回错误信息， 其中包含 是否开启验证码状态
             TokenMsg lockAccountMsg = UserTokenUtil.lockAccount(form.getUsername());

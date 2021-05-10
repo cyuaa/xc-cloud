@@ -17,9 +17,8 @@ package com.chenyu.cloud.common.model;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Version;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -41,8 +40,7 @@ import java.util.Date;
  * Created by JackyChen on 2021/4/28.
  *
  */
-@Getter
-@Setter
+@Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 public abstract class BaseModel implements Serializable {

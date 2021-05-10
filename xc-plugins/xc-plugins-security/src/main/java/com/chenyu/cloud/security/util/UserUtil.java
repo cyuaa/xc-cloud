@@ -17,18 +17,19 @@ package com.chenyu.cloud.security.util;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
+import com.chenyu.cloud.auth.api.UserApi;
 import com.chenyu.cloud.auth.model.MenuModel;
 import com.chenyu.cloud.auth.model.UserModel;
-import com.chenyu.cloud.auth.api.UserApi;
 import com.chenyu.cloud.common.exception.TokenException;
+import com.chenyu.cloud.common.properties.GlobalProperties;
 import com.chenyu.cloud.common.response.CommonMsg;
 import com.chenyu.cloud.common.response.CoreMsg;
 import com.chenyu.cloud.common.response.Result;
 import com.chenyu.cloud.common.response.TokenMsg;
-import com.chenyu.cloud.common.properties.GlobalProperties;
-import com.chenyu.cloud.core.utils.CacheUtil;
-import com.chenyu.cloud.core.utils.DistributedLockUtil;
+import com.chenyu.cloud.core.util.CacheUtil;
+import com.chenyu.cloud.core.util.DistributedLockUtil;
 import com.chenyu.cloud.security.threadlocal.TokenThreadLocal;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -319,7 +320,9 @@ public class UserUtil {
             }
 
             // 查询数据库
-            List<String> perms = userApi.getAllPerms(userId);
+            // TODO: 改成使用feign需要修改 ---
+            // List<String> perms = userApi.getAllPerms(userId);
+            List<String> perms = Lists.newArrayList();
             if(null != perms && perms.size() > 0){
                 permissions = perms;
                 // 存入缓存
@@ -384,7 +387,9 @@ public class UserUtil {
             }
 
             // 查询数据库
-            List<MenuModel> menuModels = userApi.getMenuListByUserId(userId);
+            // TODO: 改成使用feign需要修改 ---
+            // List<MenuModel> menuModels = userApi.getMenuListByUserId(userId);
+            List<MenuModel> menuModels = Lists.newArrayList();
             if(null != menuModels && menuModels.size() > 0){
                 menus = menuModels;
                 // 存入缓存
@@ -639,6 +644,14 @@ public class UserUtil {
             // 获得 超级管理员
             UserUtil.SUPER_ADMIN = globalProperties.getAuth().getSuperAdmin();
         }
+    }
+
+    // =====================================
+
+    @Autowired
+    @Lazy
+    public void setUserApi(UserApi userApi) {
+        UserUtil.userApi = userApi;
     }
 
 }

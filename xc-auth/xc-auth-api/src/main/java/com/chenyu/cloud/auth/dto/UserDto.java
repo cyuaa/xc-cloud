@@ -21,8 +21,10 @@ public class UserDto implements Serializable {
     @ApiModelProperty(value = "密码", required = true)
     @NotEmpty(message = "密码不能为空")
     private String password;
-    @ApiModelProperty(value = "用户头像")
-    private String icon;
+    @ApiModelProperty(value = "手机号")
+    private String mobile;
+    @ApiModelProperty(value = "真实姓名")
+    private String realName;
     @ApiModelProperty(value = "邮箱")
     @Email(message = "邮箱格式不合法")
     private String email;

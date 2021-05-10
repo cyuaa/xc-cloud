@@ -2,6 +2,7 @@ package com.chenyu.cloud.auth.api;
 
 import com.chenyu.cloud.auth.dto.UserDto;
 import com.chenyu.cloud.auth.dto.UserPasswordDto;
+import com.chenyu.cloud.auth.fallback.UserFallbackFactory;
 import com.chenyu.cloud.auth.model.*;
 import com.chenyu.cloud.common.constants.FeignConstants;
 import com.chenyu.cloud.common.response.Result;
@@ -11,14 +12,15 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
 
-import static com.chenyu.cloud.common.constants.FeignConstants.AUTH_USER;
 import static com.chenyu.cloud.common.constants.FeignConstants.AUTH_USER_API;
+import static com.chenyu.cloud.common.constants.FeignConstants.AUTH_USER_PATH;
 
 /**
  * 用户feign-api
  * Created by JackyChen on 2021/04/29.
  */
-@FeignClient(name = FeignConstants.XC_CLOUD_AUTH, path = AUTH_USER, contextId = AUTH_USER_API)
+@FeignClient(name = FeignConstants.XC_CLOUD_AUTH, path = AUTH_USER_PATH, contextId = AUTH_USER_API,
+            fallbackFactory = UserFallbackFactory.class)
 public interface UserApi {
 
     /** 标题 */

@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static com.chenyu.cloud.common.constants.FeignConstants.AUTH_TENANT;
 import static com.chenyu.cloud.common.constants.FeignConstants.AUTH_TENANT_API;
+import static com.chenyu.cloud.common.constants.FeignConstants.AUTH_TENANT_PATH;
 
 
 /**
@@ -36,7 +36,7 @@ import static com.chenyu.cloud.common.constants.FeignConstants.AUTH_TENANT_API;
  *
  *
  */
-@FeignClient(name = FeignConstants.XC_CLOUD_AUTH, path = AUTH_TENANT, contextId = AUTH_TENANT_API)
+@FeignClient(name = FeignConstants.XC_CLOUD_AUTH, path = AUTH_TENANT_PATH, contextId = AUTH_TENANT_API)
 public interface TenantApi {
 
     /** 标题 */

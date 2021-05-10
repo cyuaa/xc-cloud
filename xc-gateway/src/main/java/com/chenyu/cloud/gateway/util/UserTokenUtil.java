@@ -1,20 +1,15 @@
-package com.chenyu.cloud.security.util;
+package com.chenyu.cloud.gateway.util;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import com.chenyu.cloud.auth.model.UserModel;
 import com.chenyu.cloud.common.constants.TokenConstants;
-import com.chenyu.cloud.common.enums.LoginLimitRefuse;
 import com.chenyu.cloud.common.exception.TokenException;
 import com.chenyu.cloud.common.properties.GlobalProperties;
-import com.chenyu.cloud.common.response.Result;
 import com.chenyu.cloud.common.response.TokenMsg;
-import com.chenyu.cloud.core.util.CacheUtil;
 import com.chenyu.cloud.redis.RedisPlugin;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
@@ -68,76 +63,6 @@ public class UserTokenUtil {
 
 
     /**
-     * 根据 user 创建Token
-     * @param user 用户
-     * @return UserTokenUtil.TokenRet
-     */
-    public static Result<TokenRet> createToken(UserModel user) {
-        if (user == null) {
-            // 生成Token失败
-            throw new TokenException(TokenMsg.EXCEPTION_TOKEN_CREATE_ERROR);
-        }
-
-        try {
-
-            // 如果当前登录开启 数量限制
-            if(LOGIN_PROPERTIES.getLimitCount() > ACCOUNT_LIMIT_INFINITE){
-                // 当前用户已存在 Token数量
-                Long ticketLen = redisPlugin.sSize(CacheUtil.getPrefixName() + TICKET_PREFIX + user.getUsername());
-                if(ticketLen !=null && ticketLen >= LOGIN_PROPERTIES.getLimitCount()){
-                    // 如果是拒绝后者 则直接抛出异常
-                    if(LoginLimitRefuse.AFTER == LOGIN_PROPERTIES.getLimitRefuse()){
-                        // 生成Token失败 您的账号已在其他设备登录
-                        throw new TokenException(TokenMsg.EXCEPTION_TOKEN_CREATE_LIMIT_ERROR);
-                    }
-                    // 如果是拒绝前者 则弹出前者
-                    else {
-                        redisPlugin.sPop(CacheUtil.getPrefixName() + TICKET_PREFIX + user.getUsername());
-                    }
-                }
-            }
-
-            // 生效时间
-            int expire = Integer.parseInt(
-                    String.valueOf(JwtUtil.EXPIRE)
-            );
-
-            // 生成 Token 包含 username userId timestamp
-            String signToken = JwtUtil.sign(user.getUsername(), user.getId());
-
-            // 获得当前时间戳时间
-            long timestamp = Convert.toLong(
-                    JwtUtil.getClaim(signToken, TokenConstants.CREATE_TIME));
-            DateTime currDate = DateUtil.date(timestamp);
-
-            // 获得失效偏移量时间
-            DateTime dateTime = DateUtil.offsetMillisecond(currDate, expire);
-            long endTimestamp = dateTime.getTime();
-
-            // 在redis存一份 token 是为了防止 人为造假
-            // 保存用户token
-            Long saveLong = redisPlugin.sPut(CacheUtil.getPrefixName() + TICKET_PREFIX + user.getUsername(), signToken);
-            if(saveLong != null && saveLong > 0){
-                // 设置该用户全部token失效时间， 如果这时又有新设备登录 则续命
-                redisPlugin.expire(CacheUtil.getPrefixName() + TICKET_PREFIX + user.getUsername(), expire);
-
-                TokenRet tokenRet = new TokenRet();
-                tokenRet.setToken(signToken);
-                tokenRet.setEndTimestamp(endTimestamp);
-
-                return Result.success(tokenRet);
-            }
-
-        }catch (TokenException te){
-            throw te;
-        }catch (Exception e){
-            log.error(e.getMessage() , e);
-        }
-        // 生成Token失败
-        throw new TokenException(TokenMsg.EXCEPTION_TOKEN_CREATE_ERROR);
-    }
-
-    /**
      * 根据 Token 获得用户ID
      * @param token token
      * @return Integer
@@ -167,38 +92,6 @@ public class UserTokenUtil {
             username = JwtUtil.getClaim(token, TokenConstants.USERNAME);
         }catch (Exception ignored){}
         return username;
-    }
-
-
-
-    /**
-     * 退出登陆
-     * @param token token
-     */
-    public static void logout(String token) {
-        if(StringUtils.isEmpty(token)){
-            return;
-        }
-        try {
-            // 获得要退出用户
-            Integer userId = getUserIdByToken(token);
-            UserModel user = UserUtil.getUser(userId);
-            if(user != null){
-                // 删除Token信息
-                redisPlugin.sRemove(CacheUtil.getPrefixName() + TICKET_PREFIX + user.getUsername(), token);
-
-                // 如果缓存中 无该用户任何Token信息 则删除用户缓存
-                Long size = redisPlugin.sSize(CacheUtil.getPrefixName() + TICKET_PREFIX + user.getUsername());
-                if(size == null || size == 0L){
-                    // 删除相关信息
-                    UserUtil.refreshUser(user);
-                    UserUtil.refreshUserRoles(user.getId());
-                    UserUtil.refreshUserAllPerms(user.getId());
-                    UserUtil.refreshUserMenus(user.getId());
-                }
-            }
-
-        }catch (Exception ignored){}
     }
 
     /**
@@ -358,11 +251,9 @@ public class UserTokenUtil {
     public static class TokenRet {
 
         /** Token */
-        @ApiModelProperty(value = "Token")
         private String token;
 
         /** 失效时间戳 */
-        @ApiModelProperty(value = "失效时间戳")
         private Long endTimestamp;
 
     }

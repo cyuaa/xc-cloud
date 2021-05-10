@@ -4,7 +4,7 @@ import com.chenyu.cloud.common.exception.ServiceException;
 import com.chenyu.cloud.common.properties.GlobalProperties;
 import com.chenyu.cloud.common.response.CommonMsg;
 import com.chenyu.cloud.gateway.properties.IgnoreUrlsProperties;
-import com.chenyu.cloud.security.util.UserTokenUtil;
+import com.chenyu.cloud.gateway.util.UserTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +37,6 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        // 获取路由url
-        /*URI uri = exchange.getAttribute(GATEWAY_REQUEST_URL_ATTR);
-        String schemePrefix = exchange.getAttribute(GATEWAY_SCHEME_PREFIX_ATTR);
-        // 仅支持以lb开头的url
-        if (uri == null || (!"lb".equals(uri.getScheme())) && (!"lb".equals(schemePrefix))) {
-            return chain.filter(exchange);
-        }*/
         ServerHttpRequest request = exchange.getRequest();
         String pathStr = request.getURI().getPath();
         // 内部服务接口，不允许外部访问

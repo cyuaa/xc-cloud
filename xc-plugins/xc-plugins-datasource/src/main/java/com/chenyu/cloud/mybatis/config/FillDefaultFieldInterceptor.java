@@ -7,13 +7,13 @@ import cn.hutool.core.util.ReflectUtil;
 import com.chenyu.cloud.common.constants.MyBatisConstants;
 import com.chenyu.cloud.security.util.UserUtil;
 import com.google.common.collect.Lists;
-import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.ibatis.plugin.*;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -22,7 +22,7 @@ import java.util.*;
  * 填充默认字段(createTime, updateTime, createdBy, updateBy)
  * Created by JackyChen on 2021/04/29.
  */
-@Data
+@Component
 @Accessors(chain = true)
 @Intercepts({@Signature(
         type = org.apache.ibatis.executor.Executor.class,
@@ -34,8 +34,6 @@ public class FillDefaultFieldInterceptor implements Interceptor {
 
     /** 实体类字段 */
     static private final Map<Class<?>, Field[]> ENTITY_FIELD_MAP = new HashMap<>();
-
-    private Properties properties;
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
@@ -79,7 +77,7 @@ public class FillDefaultFieldInterceptor implements Interceptor {
      * @param arg
      */
     public void insertFill(Object arg) {
-        if(arg == null ){
+        if(null == arg){
             return;
         }
 
@@ -93,6 +91,20 @@ public class FillDefaultFieldInterceptor implements Interceptor {
             ENTITY_FIELD_MAP.put(arg.getClass(), fields);
         }
 
+        // 注册用户可以不用传token
+        Integer operatorId = null;
+        try {
+            operatorId = UserUtil.getUser().getId();
+        } catch (Exception e) {
+            operatorId = 0;
+        }
+        Integer tenantId = null;
+        try {
+            tenantId = UserUtil.getTenantId();
+        } catch (Exception e) {
+            tenantId = 1;
+        }
+
         for (Field f : fields) {
 
             switch (f.getName()) {
@@ -101,7 +113,7 @@ public class FillDefaultFieldInterceptor implements Interceptor {
                     // 如果创建人 为空则进行默认赋值
                     Object createValue = ReflectUtil.getFieldValue(arg, f.getName());
                     if(StringUtils.isBlank(Convert.toStr(createValue))){
-                        BeanUtil.setProperty(arg, MyBatisConstants.FIELD_CREATE_BY, UserUtil.getUser().getId());
+                        BeanUtil.setProperty(arg, MyBatisConstants.FIELD_CREATE_BY, operatorId);
                     }
                     break;
                 // 更新人
@@ -109,7 +121,7 @@ public class FillDefaultFieldInterceptor implements Interceptor {
                     // 如果更新人 为空则进行默认赋值
                     Object updateValue = ReflectUtil.getFieldValue(arg, f.getName());
                     if(StringUtils.isBlank(Convert.toStr(updateValue))){
-                        BeanUtil.setProperty(arg, MyBatisConstants.FIELD_UPDATE_BY, UserUtil.getUser().getId());
+                        BeanUtil.setProperty(arg, MyBatisConstants.FIELD_UPDATE_BY, operatorId);
                     }
                     break;
                 // 创建日期
@@ -130,7 +142,7 @@ public class FillDefaultFieldInterceptor implements Interceptor {
                     // 如果租户ID 为空则进行默认赋值
                     Object tenantValue = ReflectUtil.getFieldValue(arg, f.getName());
                     if(StringUtils.isBlank(Convert.toStr(tenantValue))){
-                        BeanUtil.setProperty(arg, MyBatisConstants.FIELD_TENANT,  UserUtil.getTenantId());
+                        BeanUtil.setProperty(arg, MyBatisConstants.FIELD_TENANT, tenantId);
                     }
                     break;
                 default:
@@ -172,6 +184,9 @@ public class FillDefaultFieldInterceptor implements Interceptor {
             ENTITY_FIELD_MAP.put(arg.getClass(), fields);
         }
 
+        // 当前时间
+        Date currDate = DateUtil.date();
+
         for (Field f : fields) {
             // 判断是否是排除字段
             if(existField.contains(f.getName())){
@@ -189,7 +204,7 @@ public class FillDefaultFieldInterceptor implements Interceptor {
                     break;
                 // 更新日期
                 case MyBatisConstants.FIELD_UPDATE_TIME:
-                    BeanUtil.setProperty(arg, MyBatisConstants.FIELD_UPDATE_TIME, DateUtil.date());
+                    BeanUtil.setProperty(arg, MyBatisConstants.FIELD_UPDATE_TIME, currDate);
                     break;
                 default:
                     break;
@@ -207,7 +222,6 @@ public class FillDefaultFieldInterceptor implements Interceptor {
 
     @Override
     public void setProperties(Properties prop) {
-        this.properties = prop;
     }
 
 }
