@@ -153,7 +153,6 @@ public class TenantUtil {
     // =====================================
 
     @Autowired
-    @Lazy
     public void setTenantApi(TenantApi tenantApi) {
         TenantUtil.tenantApi = tenantApi;
     }

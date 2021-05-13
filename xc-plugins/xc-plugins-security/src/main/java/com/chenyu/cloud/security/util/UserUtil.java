@@ -33,6 +33,7 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -49,6 +50,7 @@ import static com.chenyu.cloud.common.constants.OrderConstants.UTIL_ORDER;
 @Order(UTIL_ORDER)
 @Component
 @Lazy(false)
+@EnableFeignClients("com.chenyu.cloud")
 public class UserUtil {
 
     /** 前缀 */
@@ -649,7 +651,6 @@ public class UserUtil {
     // =====================================
 
     @Autowired
-    @Lazy
     public void setUserApi(UserApi userApi) {
         UserUtil.userApi = userApi;
     }
